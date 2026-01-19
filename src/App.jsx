@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import { useAuth } from "./auth/AuthContext";
+import ThemeToggle from "./components/ThemeToggle";
 
 function App() {
   const { user, loading, logout } = useAuth();
@@ -30,7 +31,11 @@ function App() {
           path="/home"
           element={
             user ? (
-              <div>
+              <div style={{ padding: "16px" }}>
+                {/* ✅ NEW FEATURE (SAFE ADDITION) */}
+                <ThemeToggle />
+
+                {/* ✅ EXISTING CODE (UNCHANGED LOGIC) */}
                 <h2>Home</h2>
 
                 <p>
@@ -47,6 +52,7 @@ function App() {
 
                 <button onClick={logout}>Logout</button>
 
+                {/* EXISTING FEATURE */}
                 <Home />
               </div>
             ) : (
