@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../auth/AuthContext";
-import { addTodo, getTodos, deleteTodo } from "../utils/indexDb";
+import {
+  addTodo,
+  getTodos,
+  deleteTodo,
+  updateTodo,
+} from "../utils/indexDb";
 
 const TodoSection = () => {
   const { user } = useAuth();
@@ -29,12 +34,22 @@ const TodoSection = () => {
     const newTodo = {
       text,
       userId: user.uid,
+      completed: false,
     };
 
     const id = await addTodo(newTodo);
-
     setTodos([...todos, { ...newTodo, id }]);
     setText("");
+  };
+
+  const handleToggleTodo = async (id, completed) => {
+    await updateTodo(id, { completed });
+
+    setTodos((prev) =>
+      prev.map((todo) =>
+        todo.id === id ? { ...todo, completed } : todo
+      )
+    );
   };
 
   const handleDeleteTodo = async (id) => {
@@ -44,20 +59,59 @@ const TodoSection = () => {
 
   return (
     <div>
-      <h3>Todos</h3>
+      <h3 className="text-lg font-semibold mb-3">Todos</h3>
 
-      <input
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        placeholder="Enter todo"
-      />
-      <button onClick={handleAddTodo}>Add</button>
+      {/* INPUT */}
+      <div className="flex items-center gap-3 mb-4">
+        <input
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Enter todo"
+          className="flex-1 px-3 py-2 rounded-md border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
 
-      <ul>
+        <button
+          onClick={handleAddTodo}
+          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+        >
+          Add
+        </button>
+      </div>
+
+      {/* LIST */}
+      <ul className="space-y-2">
         {todos.map((todo) => (
-          <li key={todo.id}>
-            {todo.text}
-            <button onClick={() => handleDeleteTodo(todo.id)}>❌</button>
+          <li
+            key={todo.id}
+            className="flex items-center justify-between px-3 py-2 rounded-md bg-gray-100 dark:bg-slate-800"
+          >
+            <div className="flex items-center gap-3">
+              <input
+                type="checkbox"
+                checked={todo.completed}
+                onChange={(e) =>
+                  handleToggleTodo(todo.id, e.target.checked)
+                }
+                className="w-4 h-4 accent-blue-600"
+              />
+
+              <span
+                className={`${
+                  todo.completed
+                    ? "line-through text-gray-400"
+                    : ""
+                }`}
+              >
+                {todo.text}
+              </span>
+            </div>
+
+            <button
+              onClick={() => handleDeleteTodo(todo.id)}
+              className="text-red-500 hover:text-red-700"
+            >
+              ❌
+            </button>
           </li>
         ))}
       </ul>

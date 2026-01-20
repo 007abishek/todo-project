@@ -32,45 +32,92 @@ const ProductSection = () => {
   }, []);
 
   if (loading) {
-    return <p>Loading products...</p>;
+    return (
+      <p className="text-sm text-gray-400">
+        Loading products...
+      </p>
+    );
   }
 
   if (error) {
     return (
-      <div>
-        <h3>Products</h3>
-        <p style={{ color: "red" }}>{error}</p>
+      <div className="space-y-2">
+        <h3 className="text-lg font-semibold text-gray-100">
+          Products
+        </h3>
+        <p className="text-red-400 text-sm">
+          {error}
+        </p>
       </div>
     );
   }
 
   return (
-    <div>
-      <h3>Products</h3>
+    <div className="space-y-5">
+      {/* HEADER */}
+      <div>
+        <h3 className="text-lg font-semibold text-gray-100">
+          Products
+        </h3>
 
-      {user.isAnonymous && (
-        <p style={{ color: "orange" }}>
-          Login to unlock full product features
-        </p>
-      )}
+        {user.isAnonymous && (
+          <p className="text-orange-400 text-sm">
+            Login to unlock full product features
+          </p>
+        )}
+      </div>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          gap: "15px",
-        }}
-      >
+      {/* PRODUCT GRID */}
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {products.map((product) => (
           <div
             key={product.id}
-            style={{ border: "1px solid #ccc", padding: "10px" }}
+            className="
+              rounded-xl
+              bg-slate-800
+              border border-slate-700
+              p-5
+              transition
+              hover:border-slate-600
+              hover:shadow-md
+            "
           >
-            <img src={product.image} alt={product.title} width="80" />
-            <h4>{product.title}</h4>
-            <p>₹ {product.price}</p>
+            {/* IMAGE */}
+            <div className="flex justify-center mb-4 bg-slate-900 rounded-lg p-4">
+              <img
+                src={product.image}
+                alt={product.title}
+                className="h-28 object-contain"
+              />
+            </div>
 
-            {!user.isAnonymous && <button>Add to Wishlist</button>}
+            {/* TITLE */}
+            <h4 className="text-sm font-medium text-gray-200 mb-1 line-clamp-2">
+              {product.title}
+            </h4>
+
+            {/* PRICE */}
+            <p className="text-sm font-semibold text-gray-300 mb-4">
+              ₹ {product.price}
+            </p>
+
+            {/* ACTION */}
+            {!user.isAnonymous && (
+              <button
+                className="
+                  w-full
+                  py-2
+                  rounded-md
+                  bg-blue-600
+                  text-white
+                  hover:bg-blue-500
+                  active:scale-95
+                  transition
+                "
+              >
+                Add to Wishlist
+              </button>
+            )}
           </div>
         ))}
       </div>

@@ -1,32 +1,15 @@
-/* Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* App wrapper */
-.app {
+@import "tailwindcss";
+/* .app {
   min-height: 100vh;
-  width: 100%;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* LIGHT MODE */
-.light {
+.app.light {
   background-color: #ffffff;
-  color: #000000;
+  color: #00000088;
 }
 
-/* DARK MODE */
-.dark {
+.app.dark {
   background-color: #121212;
   color: #ffffff;
-}
-
-/* Optional: better button look */
-button {
-  padding: 8px 12px;
-  margin-bottom: 12px;
-  cursor: pointer;
-}
+} */

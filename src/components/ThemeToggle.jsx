@@ -4,8 +4,8 @@ function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <button onClick={toggleTheme} style={{ marginBottom: "10px" }}>
-      Switch to {theme === "light" ? "Dark" : "Light"} Mode
+    <button onClick={toggleTheme} aria-label="Toggle theme">
+      {theme === "light" ? "🌙" : "🌞"}
     </button>
   );
 }
