@@ -18,11 +18,7 @@ function App() {
         <Route
           path="/"
           element={
-            user ? (
-              <Navigate to="/home" />
-            ) : (
-              <Login key="login" />
-            )
+            user ? <Navigate to="/home" /> : <Login />
           }
         />
 
@@ -32,10 +28,10 @@ function App() {
           element={
             user ? (
               <div style={{ padding: "16px" }}>
-                {/* ✅ NEW FEATURE (SAFE ADDITION) */}
+                {/* ✅ NEW FEATURE (ONLY AFTER LOGIN) */}
                 <ThemeToggle />
 
-                {/* ✅ EXISTING CODE (UNCHANGED LOGIC) */}
+                {/* EXISTING CODE */}
                 <h2>Home</h2>
 
                 <p>
@@ -52,7 +48,6 @@ function App() {
 
                 <button onClick={logout}>Logout</button>
 
-                {/* EXISTING FEATURE */}
                 <Home />
               </div>
             ) : (

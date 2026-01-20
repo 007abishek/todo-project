@@ -6,12 +6,13 @@ export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState("light");
 
   const toggleTheme = () => {
-    setTheme(t => (t === "light" ? "dark" : "light"));
+    setTheme(prev => (prev === "light" ? "dark" : "light"));
   };
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <div className={theme}>
+      {/* IMPORTANT: wrapper must fill viewport */}
+      <div className={`app ${theme}`}>
         {children}
       </div>
     </ThemeContext.Provider>
